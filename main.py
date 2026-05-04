@@ -219,6 +219,24 @@ def visualize_cube(cube, title="Rubik's Cube"):
     plt.savefig(f"{title.replace(' ', '_')}.png")
     plt.close()
 
+def reverse_move(move):
+    """
+    Get the reverse of a move.
+    R becomes R', R' becomes R, etc.
+    """
+    if move.endswith("'"):
+        return move[0]
+    else:
+        return move + "'"
+
+def get_solve_moves(scramble_moves):
+    """
+    Generate solve moves by reversing and inverting the scramble sequence.
+    """
+    # Reverse the order and invert each move
+    solve_moves = [reverse_move(move) for move in reversed(scramble_moves)]
+    return solve_moves
+
 def main():
     init_db()  # Initialize database
 
@@ -235,21 +253,23 @@ def main():
 
     # Scramble
     scramble_moves = ["R", "U", "R'", "U'"] * (n//2)
+    print(f"\nApplying scramble moves: {scramble_moves}")
     for move in scramble_moves:
         cube.apply_move(move)
 
-    print("Scrambled cube:")
+    print("\nScrambled cube:")
     visualize_cube(cube, f"Scrambled_{n}x{n}x{n}_Cube")
     save_to_db(cube, f"Scrambled {n}x{n}x{n} cube")
 
-    # Simple solving example (not full solve, just demo)
-    solve_moves = ["U", "R", "U'", "R'"] * (n//2)
+    # Solve by reversing the scramble sequence
+    solve_moves = get_solve_moves(scramble_moves)
+    print(f"\nApplying solve moves: {solve_moves}")
     for move in solve_moves:
         cube.apply_move(move)
 
-    print("After some moves:")
-    visualize_cube(cube, f"After_Moves_{n}x{n}x{n}_Cube")
-    save_to_db(cube, f"After moves {n}x{n}x{n} cube")
+    print("\nCube completely solved!")
+    visualize_cube(cube, f"Solved_{n}x{n}x{n}_Cube")
+    save_to_db(cube, f"Solved {n}x{n}x{n} cube")
 
 if __name__ == "__main__":
     main()
