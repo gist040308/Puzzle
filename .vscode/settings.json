@@ -1,0 +1,4 @@
+{
+    "python.defaultInterpreterPath": "/home/codespace/.python/current/bin/python",
+    "python.terminal.activateEnvironment": true
+}
