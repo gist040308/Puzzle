@@ -61,6 +61,22 @@ Open `index.html` in a web browser for an interactive demo.
 
 You can change the cube size, apply moves, scramble, and see a simple solve demo.
 
+Note: The HTML demo currently only implements the R move fully. Other moves can be added similarly.
+
+## Files
+
+- `main.py`: Python script for cube simulation and visualization
+- `index.html`: Interactive HTML demo
+- `requirements.txt`: Python dependencies
+- `README.md`: This file
+- `.gitignore`: Excludes generated files from version control
+
+### HTML Version
+
+Open `index.html` in a web browser for an interactive demo.
+
+You can change the cube size, apply moves, scramble, and see a simple solve demo.
+
 ## Files
 
 - `main.py`: Python script for cube simulation and visualization
