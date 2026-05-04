@@ -61,7 +61,7 @@ Open `index.html` in a web browser for an interactive demo.
 
 You can change the cube size, apply moves, scramble, and see a simple solve demo.
 
-Note: The HTML demo currently only implements the R move fully. Other moves can be added similarly.
+All basic moves (R, L, U, D, F, B with inverses) are now fully implemented.
 
 ## Files
 

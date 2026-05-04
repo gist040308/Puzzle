@@ -96,12 +96,100 @@
                 }
             }
 
-            // Similarly for other moves, but for brevity, implement only R for now
+            moveL(inverse = false) {
+                if (inverse) this.rotateFaceCounterclockwise('L');
+                else this.rotateFaceClockwise('L');
+                let temp = this.faces.F.map(row => row[0]);
+                if (inverse) {
+                    this.faces.F.forEach((row, i) => row[0] = this.faces.U[i][0]);
+                    this.faces.U.forEach((row, i) => row[0] = this.faces.B[this.n-1-i][this.n-1]);
+                    this.faces.B.forEach((row, i) => row[this.n-1] = this.faces.D[this.n-1-i][0]);
+                    this.faces.D.forEach((row, i) => row[0] = temp[i]);
+                } else {
+                    this.faces.F.forEach((row, i) => row[0] = this.faces.D[i][0]);
+                    this.faces.D.forEach((row, i) => row[0] = this.faces.B[this.n-1-i][this.n-1]);
+                    this.faces.B.forEach((row, i) => row[this.n-1] = this.faces.U[this.n-1-i][0]);
+                    this.faces.U.forEach((row, i) => row[0] = temp[i]);
+                }
+            }
+
+            moveU(inverse = false) {
+                if (inverse) this.rotateFaceCounterclockwise('U');
+                else this.rotateFaceClockwise('U');
+                let temp = this.faces.F[0].slice();
+                if (inverse) {
+                    this.faces.F[0] = this.faces.R[0].slice();
+                    this.faces.R[0] = this.faces.B[0].slice();
+                    this.faces.B[0] = this.faces.L[0].slice();
+                    this.faces.L[0] = temp;
+                } else {
+                    this.faces.F[0] = this.faces.L[0].slice();
+                    this.faces.L[0] = this.faces.B[0].slice();
+                    this.faces.B[0] = this.faces.R[0].slice();
+                    this.faces.R[0] = temp;
+                }
+            }
+
+            moveD(inverse = false) {
+                if (inverse) this.rotateFaceCounterclockwise('D');
+                else this.rotateFaceClockwise('D');
+                let temp = this.faces.F[this.n-1].slice();
+                if (inverse) {
+                    this.faces.F[this.n-1] = this.faces.R[this.n-1].slice();
+                    this.faces.R[this.n-1] = this.faces.B[this.n-1].slice();
+                    this.faces.B[this.n-1] = this.faces.L[this.n-1].slice();
+                    this.faces.L[this.n-1] = temp;
+                } else {
+                    this.faces.F[this.n-1] = this.faces.L[this.n-1].slice();
+                    this.faces.L[this.n-1] = this.faces.B[this.n-1].slice();
+                    this.faces.B[this.n-1] = this.faces.R[this.n-1].slice();
+                    this.faces.R[this.n-1] = temp;
+                }
+            }
+
+            moveF(inverse = false) {
+                if (inverse) this.rotateFaceCounterclockwise('F');
+                else this.rotateFaceClockwise('F');
+                let temp = this.faces.U[this.n-1].slice();
+                if (inverse) {
+                    this.faces.U[this.n-1] = this.faces.L.map(row => row[this.n-1]).reverse();
+                    this.faces.L.forEach((row, i) => row[this.n-1] = this.faces.D[0][this.n-1-i]);
+                    this.faces.D[0] = this.faces.R.map(row => row[0]).reverse();
+                    this.faces.R.forEach((row, i) => row[0] = temp[i]);
+                } else {
+                    this.faces.U[this.n-1] = this.faces.R.map(row => row[0]);
+                    this.faces.R.forEach((row, i) => row[0] = this.faces.D[0][this.n-1-i]);
+                    this.faces.D[0] = this.faces.L.map(row => row[this.n-1]);
+                    this.faces.L.forEach((row, i) => row[this.n-1] = temp[this.n-1-i]);
+                }
+            }
+
+            moveB(inverse = false) {
+                if (inverse) this.rotateFaceCounterclockwise('B');
+                else this.rotateFaceClockwise('B');
+                let temp = this.faces.U[0].slice();
+                if (inverse) {
+                    this.faces.U[0] = this.faces.R.map(row => row[this.n-1]);
+                    this.faces.R.forEach((row, i) => row[this.n-1] = this.faces.D[this.n-1][this.n-1-i]);
+                    this.faces.D[this.n-1] = this.faces.L.map(row => row[0]);
+                    this.faces.L.forEach((row, i) => row[0] = temp[this.n-1-i]);
+                } else {
+                    this.faces.U[0] = this.faces.L.map(row => row[0]).reverse();
+                    this.faces.L.forEach((row, i) => row[0] = this.faces.D[this.n-1][i]);
+                    this.faces.D[this.n-1] = this.faces.R.map(row => row[this.n-1]).reverse();
+                    this.faces.R.forEach((row, i) => row[this.n-1] = temp[this.n-1-i]);
+                }
+            }
+
             applyMove(move) {
                 let inverse = move.includes("'");
                 let face = move[0];
                 if (face === 'R') this.moveR(inverse);
-                // Add others similarly
+                else if (face === 'L') this.moveL(inverse);
+                else if (face === 'U') this.moveU(inverse);
+                else if (face === 'D') this.moveD(inverse);
+                else if (face === 'F') this.moveF(inverse);
+                else if (face === 'B') this.moveB(inverse);
             }
         }
 
